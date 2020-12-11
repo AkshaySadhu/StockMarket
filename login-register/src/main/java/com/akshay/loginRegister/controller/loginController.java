@@ -66,7 +66,7 @@ public class loginController {
             response = new ResponseEntity<>(responseMap, HttpStatus.OK);
         }
         else{
-            responseMap.put("status", "Login Unuccessful. Try again with correct credentials");
+            responseMap.put("status", "Login Unsuccessful. Try again!!!");
             response = new ResponseEntity<>(responseMap, HttpStatus.BAD_REQUEST);
         }
         return response;
