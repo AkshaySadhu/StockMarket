@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Stock Market.iml" filepath="$PROJECT_DIR$/.idea/Stock Market.iml" />
       <module fileurl="file://$PROJECT_DIR$/login-register/login-regester.iml" filepath="$PROJECT_DIR$/login-register/login-regester.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../manageStockSpreadSheet/manageStockSpreadSheet.iml" filepath="$PROJECT_DIR$/../manageStockSpreadSheet/manageStockSpreadSheet.iml" />
     </modules>
   </component>
 </project>
