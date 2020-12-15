@@ -48,7 +48,7 @@ public class loginController {
             }
         }else{
             responseMap.put("status", "Registration unsuccessful. Username, email or phone number already exits. Please check your details");
-            response = new ResponseEntity<>(responseMap, HttpStatus.OK);
+            response = new ResponseEntity<>(responseMap, HttpStatus.BAD_REQUEST);
         }
         return response;
     }
