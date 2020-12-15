@@ -9,4 +9,5 @@ public interface loginRepository extends CrudRepository<Login, Long> {
 
     Login findByUsername(String username);
     Login findByEmailIgnoreCase(String email);
+    Login findByPhoneNumber(String phoneNumber);
 }

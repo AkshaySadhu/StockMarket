@@ -1,7 +1,6 @@
 package com.akshay.loginRegister.controller;
 
 import com.akshay.loginRegister.DTO.loginDto;
-import com.akshay.loginRegister.model.Login;
 import com.akshay.loginRegister.serviceLayer.emailService;
 import com.akshay.loginRegister.serviceLayer.loginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,35 +23,33 @@ public class loginController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/register")
     public ResponseEntity<Map<String, String>> registerUser(@RequestBody loginDto logindto){
-        loginService.registerUser(logindto);
-        String confirmationToken = emailService.generateConfirmationToken(logindto);
         Map<String, String> responseMap = new HashMap<>();
         ResponseEntity<Map<String, String>> response = null;
-//        try {
-            if (confirmationToken != null) {
-                SimpleMailMessage mailMessage = new SimpleMailMessage();
-                mailMessage.setTo(logindto.getEmail());
-                mailMessage.setSubject("Complete Registration!");
-                mailMessage.setFrom("minisadhu@gmail.com");
-                mailMessage.setText("To confirm your account, please click here : "
-                        + "http://localhost:8080/confirm-account?token=" + confirmationToken);
+        if(loginService.registerUser(logindto)) {
+            String confirmationToken = emailService.generateConfirmationToken(logindto);
+            try {
+                if (confirmationToken != null) {
+                    SimpleMailMessage mailMessage = new SimpleMailMessage();
+                    mailMessage.setTo(logindto.getEmail());
+                    mailMessage.setSubject("Complete Registration!");
+                    mailMessage.setFrom("minisadhu@gmail.com");
+                    mailMessage.setText("To confirm your account, please click here : "
+                            + "http://localhost:8080/confirm-account?token=" + confirmationToken);
 
-                emailService.sendEmail(mailMessage);
-                responseMap.put("status", "Successfully registered. Please confirm your email");
-                response = new ResponseEntity<>(responseMap, HttpStatus.OK);
-            }else{
+                    emailService.sendEmail(mailMessage);
+                    responseMap.put("status", "Successfully registered. Please confirm your email");
+                    response = new ResponseEntity<>(responseMap, HttpStatus.OK);
+                }
+            } catch (Exception e) {
                 emailService.deleteConfirmationToken(confirmationToken);
                 loginService.deleteUser(logindto);
                 responseMap.put("status", "This User may already exits. Try with different credentials");
                 response = new ResponseEntity<>(responseMap, HttpStatus.BAD_REQUEST);
             }
-//        }catch (Exception e){
-//            emailService.deleteConfirmationToken(confirmationToken);
-//            loginService.deleteUser(login);
-//            responseMap.put("status", "This User may already exits. Try with different credentials");
-//            response = new ResponseEntity<>(responseMap, HttpStatus.BAD_REQUEST);
-//        }
-
+        }else{
+            responseMap.put("status", "Registration unsuccessful. Username, email or phone number already exits. Please check your details");
+            response = new ResponseEntity<>(responseMap, HttpStatus.OK);
+        }
         return response;
     }
 

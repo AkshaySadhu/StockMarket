@@ -14,11 +14,19 @@ public class loginService {
     @Autowired
     private loginRepository loginRepository;
 
-    public void registerUser(loginDto loginDto) {
+    public boolean registerUser(loginDto loginDto) {
         Login login = new Login();
         BeanUtils.copyProperties(loginDto, login);
-        System.out.println("Confirmed: " +login.getConfirmed() + " UserType: " +login.getUserType());
-        loginRepository.save(login);
+        Login usernameExists = loginRepository.findByUsername(login.getUsername());
+        Login emailExists = loginRepository.findByEmailIgnoreCase(login.getEmail());
+        Login phnoExists = loginRepository.findByPhoneNumber(login.getPhoneNumber());
+        if((usernameExists == null) && (emailExists == null) && (phnoExists == null)) {
+            loginRepository.save(login);
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public boolean login(loginDto loginDto) {

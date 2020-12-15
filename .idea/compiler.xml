@@ -7,15 +7,20 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="login-regester" />
+        <module name="manageStockSpreadSheet" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="login-regester" target="1.8" />
+      <module name="manageSpreadsheet" target="1.8" />
+      <module name="manageStockSpreadSheet" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="login-regester" options="-parameters" />
+      <module name="manageSpreadsheet" options="-parameters" />
+      <module name="manageStockSpreadSheet" options="-parameters" />
     </option>
   </component>
 </project>
