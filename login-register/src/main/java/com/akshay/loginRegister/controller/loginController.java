@@ -74,7 +74,7 @@ public class loginController {
         boolean status = emailService.verifyEmail(confirmationToken);
         Map<String, String> responseMap = new HashMap<>();
         ResponseEntity<Map<String, String>> response;
-        if(status == true){
+        if(status){
             responseMap.put("status", "Email has been successfully verified");
             response = new ResponseEntity<>(responseMap, HttpStatus.OK);
         }else {
